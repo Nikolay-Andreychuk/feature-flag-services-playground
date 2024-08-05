@@ -1,7 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
+
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"feature_enabled": False}
+@app.get("/{id}")
+def read_root(id: int, language: str | None = Query(None)):
+    return {
+        "feature_enabled": False,
+        "ab_test_flag": False
+    }
