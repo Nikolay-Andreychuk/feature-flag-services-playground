@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code into the container
 COPY backend .
 
-# Copy the custom hosts file into the container
-COPY blocked_hosts /etc/blocked_hosts
-
 # Command to run the FastAPI application
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
