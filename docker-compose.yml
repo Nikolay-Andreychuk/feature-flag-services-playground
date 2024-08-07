@@ -1,7 +1,8 @@
 version: '3.8'
 
 services:
-  backend:
+  feature_backend:
+    container_name: feature_backend
     build:
       context: .
       dockerfile: Dockerfile
