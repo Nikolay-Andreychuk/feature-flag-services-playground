@@ -15,4 +15,8 @@ block:
 
 unblock:
 	docker exec -it feature_backend /bin/bash -c 'sed "/127\.0\.0\.1 edge\.api\.flagsmith\.com/d" /etc/hosts > /tmp/hosts.tmp'
-	docker exec -it feature_backend /bin/bash -c 'cp /tmp/hosts.tmp /etc/hosts'
+	docker exec -it feature_backend /bin/bash -c 'cp /tmp/hosts.tmp /etc/hosts'up:
+	docker-compose up --build
+
+up-blocked:
+	EXTRA_HOSTS="edge.api.flagsmith.com:127.0.0.1" docker-compose up --build
