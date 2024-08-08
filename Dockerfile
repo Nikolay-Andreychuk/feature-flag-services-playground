@@ -4,9 +4,8 @@ FROM python:3.11-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file and .env into the container
+# Copy the requirements file into the container
 COPY requirements.txt .
-COPY .env .
 
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -14,5 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code into the container
 COPY backend .
 
-# Command to run the FastAPI application
+# Copy the .env file into the container
+COPY .env .
+
+# Set environment variable for Flagsmith API key
+ENV FLAGSMITH_API_KEY=${FLAGSMITH_API_KEY}
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
