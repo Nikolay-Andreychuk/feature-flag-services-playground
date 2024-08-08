@@ -2,15 +2,8 @@ version: '3.8'
 
 services:
   feature_backend:
-    container_name: feature_backend
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-    env_file:
-      - .env
+    extends:
+      file: docker-compose.yml
+      service: feature_backend
     extra_hosts: 
       - edge.api.flagsmith.com:127.0.0.1
