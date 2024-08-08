@@ -1,9 +1,10 @@
+import os
 from fastapi import FastAPI, Query
 from flagsmith import Flagsmith
 
 
 flagsmith = Flagsmith(
-    environment_key="ser.gnV6HasGUwdA8WksEu4KVj", 
+    environment_key=os.getenv("FLAGSMITH_API_KEY"),
     enable_local_evaluation=True)
 
 app = FastAPI()
