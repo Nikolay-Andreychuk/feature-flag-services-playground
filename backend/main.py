@@ -1,11 +1,14 @@
 import os
 from fastapi import FastAPI, Query
 from flagsmith import Flagsmith
+from flagsmith.offline_handlers import LocalFileHandler
 
 
+local_file_handler = LocalFileHandler(environment_document_path="/app/flags.json")
 flagsmith = Flagsmith(
     environment_key=os.getenv("FLAGSMITH_API_KEY"),
-    enable_local_evaluation=True)
+    enable_local_evaluation=True,
+    offline_handler=local_file_handler)
 
 app = FastAPI()
 

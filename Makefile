@@ -1,8 +1,8 @@
 up: 
-	docker-compose up -d
+	docker-compose up
 
 up-blocked:
-	docker-compose -f docker-compose-blocked.yml up -d
+	docker-compose -f docker-compose-blocked.yml up
 
 down: 
 	docker-compose down
