@@ -1,3 +1,4 @@
+import json
 import logging
 import threading
 import time
@@ -6,7 +7,11 @@ from fastapi import FastAPI, Query
 from growthbook import GrowthBook, AbstractFeatureCache, feature_repo
 
 
-class InMemoryStorageWithBackgroundReload(AbstractFeatureCache):
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+class RobustFeatureStorage(AbstractFeatureCache):
     def __init__(self) -> None:
         self.cache: dict[str, dict] = {}
         self.environment_data_polling_manager_thread = (
@@ -46,12 +51,18 @@ class FeaturesPollingManager(threading.Thread):
         self.api_host = "https://cdn.growthbook.io"
         self.client_key = "sdk-j3FK6hvlc58iloS"
         self.key = self.api_host + "::" + self.client_key
+        
 
     def run(self) -> None:
+        features = json.load(open("/app/flags.json"))
+        logger.info(features)
+        self.cache.set(self.key, features, -1)
+
         while not self._stop_event.is_set():
             features = feature_repo._fetch_features(
                 api_host=self.api_host,
                 client_key=self.client_key)
+            logger.info(features)
     
             if features:
                 self.cache.set(self.key, features, -1)
@@ -66,10 +77,8 @@ class FeaturesPollingManager(threading.Thread):
 
 
 # Configure GrowthBook to use your custom cache class
-feature_repo.set_cache(InMemoryStorageWithBackgroundReload())
+feature_repo.set_cache(RobustFeatureStorage())
 
-
-logging.basicConfig(level=logging.DEBUG)
 
 def on_experiment_viewed(experiment, result):
   print("Viewed Experiment")

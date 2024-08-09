@@ -8,18 +8,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    networks:
-      - feature_network
     volumes:
       - .:/app
-
-  redis:
-    image: "redis:alpine"
-    container_name: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - feature_network
-
-networks:
-  feature_network:

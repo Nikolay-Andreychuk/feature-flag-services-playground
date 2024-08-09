@@ -1,0 +1,6 @@
+{
+  "my-cool-feature": {
+    "defaultValue": false,
+    "rules": [{ "condition": { "language": "en" }, "force": true }]
+  }
+}
