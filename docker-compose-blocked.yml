@@ -6,4 +6,4 @@ services:
       file: docker-compose.yml
       service: feature_backend
     extra_hosts: 
-      - api.feature-service.com:127.0.0.1
+      - edge.api.flagsmith.com:127.0.0.1

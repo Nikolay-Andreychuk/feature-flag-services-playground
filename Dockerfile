@@ -13,5 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code into the container
 COPY backend .
 
-# Command to run the FastAPI application
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Set environment variable for Flagsmith API key
+ENV FLAGSMITH_API_KEY=${FLAGSMITH_API_KEY}
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
