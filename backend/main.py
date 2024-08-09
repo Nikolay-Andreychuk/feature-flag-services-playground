@@ -16,6 +16,7 @@ class InMemoryStorageWithBackgroundReload(AbstractFeatureCache):
                 daemon=True,
             )
         )
+        self.environment_data_polling_manager_thread.start()
 
     def get(self, key: str) -> dict | None:
         if key in self.cache:
