@@ -55,14 +55,12 @@ class FeaturesPollingManager(threading.Thread):
 
     def run(self) -> None:
         features = json.load(open("/app/flags.json"))
-        logger.info(features)
         self.cache.set(self.key, features, -1)
 
         while not self._stop_event.is_set():
             features = feature_repo._fetch_features(
                 api_host=self.api_host,
                 client_key=self.client_key)
-            logger.info(features)
     
             if features:
                 self.cache.set(self.key, features, -1)
@@ -81,9 +79,7 @@ feature_repo.set_cache(RobustFeatureStorage())
 
 
 def on_experiment_viewed(experiment, result):
-  print("Viewed Experiment")
-  print("Experiment Id: " + experiment.key)
-  print("Variation Id: " + result.key)
+    logger.info(f"Viewed Experiment: {experiment.key} -> {result.key}")
 
 app = FastAPI()
 
@@ -102,5 +98,5 @@ def read_root(id: int, language: str | None = Query(None)):
 
     return {
         "feature_enabled": gb.is_on("my-cool-feature"),
-        "ab_test_flag": False
+        "ab_test_flag": gb.is_on("my-cool-abtest"),
     }
