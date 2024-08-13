@@ -9,7 +9,9 @@ client = UnleashClient(
     url="http://host.docker.internal:4242/api/",
     app_name="playground",
     custom_headers={'Authorization': 'default:development.064b6f40e22f2f55a716667bf736ad2185a0831dded7a1de99ac33ac'},
-    cache=cache)
+    cache=cache,
+    request_timeout=1,
+    request_retries=0)
 
 client.initialize_client()
 
