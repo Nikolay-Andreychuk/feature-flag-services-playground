@@ -10,7 +10,7 @@ client = UnleashClient(
     app_name="playground",
     custom_headers={'Authorization': 'default:development.064b6f40e22f2f55a716667bf736ad2185a0831dded7a1de99ac33ac'},
     cache=cache,
-    request_timeout=1,
+    request_timeout=3,
     request_retries=0)
 
 client.initialize_client()
